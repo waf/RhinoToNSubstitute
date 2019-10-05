@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using RhinoToNSubstitute.Extensions;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace RhinoToNSubstitute.Features.ConvertAsserts
@@ -14,17 +16,25 @@ namespace RhinoToNSubstitute.Features.ConvertAsserts
             "GenerateMock",
         };
 
-        internal static MemberAccessExpressionSyntax Convert(MemberAccessExpressionSyntax node)
-        {
-            if (node.Expression.ToString() != "MockRepository"
-                || !StubMockExpressions.Contains(node.Name.Identifier.ToString())
-                || !(node.Name is GenericNameSyntax genericName))
+        internal static MemberAccessExpressionSyntax Convert(MemberAccessExpressionSyntax node) =>
+            node switch
             {
-                return node;
-            }
-            return node
+                MemberAccessExpressionSyntax
+                {
+                    Expression: ExpressionSyntax("MockRepository"),
+                    Name: GenericNameSyntax genericName
+                } when IsRhinoStubMethod(genericName) => BuildSubstituteForExpression(node, genericName),
+                _ => node
+            };
+
+        private static bool IsRhinoStubMethod(GenericNameSyntax genericName) =>
+            StubMockExpressions.Contains(genericName.Identifier.ToString());
+
+        private static MemberAccessExpressionSyntax BuildSubstituteForExpression(
+            MemberAccessExpressionSyntax node,
+            GenericNameSyntax genericName) =>
+            node
                 .WithExpression(IdentifierName("Substitute"))
                 .WithName(GenericName("For").WithTypeArgumentList(genericName.TypeArgumentList));
-        }
     }
 }

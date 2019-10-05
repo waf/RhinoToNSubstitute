@@ -26,26 +26,19 @@ namespace RhinoToNSubstitute.Features.ConvertStub
                         {
                             Expression: MemberAccessExpressionSyntax
                             {
-                                Name: IdentifierNameSyntax
-                                { Identifier: SyntaxToken { ValueText: "Stub" } },
+                                Name: IdentifierNameSyntax("Stub")
                             } rhinoStubCall,
                             ArgumentList: ArgumentListSyntax
-                            {
-                                Arguments: SeparatedSyntaxList<ArgumentSyntax>(
-                                    ArgumentSyntax
-                                    {
-                                        Expression: SimpleLambdaExpressionSyntax
-                                        {
-                                            Body: var stubbedExpression
-                                        }
-                                    }
-                                )
-                            }
+                            (
+                                SimpleLambdaExpressionSyntax
+                                {
+                                    Body: var stubbedExpression
+                                }
+                            )
                         },
-                        Name: IdentifierNameSyntax
-                        { Identifier: SyntaxToken { ValueText: "Return" } }
+                        Name: SimpleNameSyntax("Return")
                     } rhinoReturnCall
-                } rhinoStubReturnCall => CreateNSubstituteStub(stubbedExpression, rhinoStubCall, rhinoReturnCall, rhinoStubReturnCall),
+                } => CreateNSubstituteStub(stubbedExpression, rhinoStubCall, rhinoReturnCall, node),
                 _ => node,
             };
 
