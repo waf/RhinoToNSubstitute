@@ -5,7 +5,7 @@ using RhinoToNSubstitute.Features.ConvertStub;
 
 namespace RhinoToNSubstitute.Visitor
 {
-    public partial class RhinoToNSubstituteVisitor : CSharpSyntaxRewriter
+    partial class RhinoToNSubstituteVisitor : CSharpSyntaxRewriter
     {
         public override SyntaxNode VisitInvocationExpression(InvocationExpressionSyntax node)
         {

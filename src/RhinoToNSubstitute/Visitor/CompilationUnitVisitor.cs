@@ -5,7 +5,7 @@ using RhinoToNSubstitute.Features.AddRequiredUsings;
 
 namespace RhinoToNSubstitute.Visitor
 {
-    public partial class RhinoToNSubstituteVisitor : CSharpSyntaxRewriter
+    partial class RhinoToNSubstituteVisitor : CSharpSyntaxRewriter
     {
         private readonly Options options;
 

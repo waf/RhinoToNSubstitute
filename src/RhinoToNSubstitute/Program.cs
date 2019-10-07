@@ -1,9 +1,11 @@
 ﻿using System.CommandLine.DragonFruit;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.CodeAnalysis.CSharp;
 using RhinoToNSubstitute.Visitor;
 
+[assembly: InternalsVisibleTo("RhinoToNSubstitute.Tests")]
 namespace RhinoToNSubstitute
 {
     public static class Program

@@ -6,6 +6,7 @@
     <OutputType>Exe</OutputType>
     <PackageId>RhinoToNSubstitute</PackageId>
     <LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
